@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-
 import sys
-
 def factorize(number):
     factors = []
     i = 2
