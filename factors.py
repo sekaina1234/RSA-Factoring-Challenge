@@ -1,27 +1,37 @@
 #!/usr/bin/python3
 import sys
 
-def factorize_number(n):
+def factorize(number):
     factors = []
-    for i in range(2, int(n**0.5) + 1):
-        while n % i == 0:
+    i = 2
+    while i * i <= number:
+        if number % i:
+            i += 1
+        else:
+            number //= i
             factors.append(i)
-            n //= i
-    if n > 1:
-        factors.append(n)
+    if number > 1:
+        factors.append(number)
     return factors
 
-def factorize_file(filename):
-    with open(filename, 'r') as file:
-        numbers = file.read().splitlines()
-        for number in numbers:
-            n = int(number)
-            factors = factorize_number(n)
-            if len(factors) > 1:
-                print(f"{n}={factors[0]}*{factors[1]}")
-
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
+def main():
+    if len(sys.argv) != 2:
         print("Usage: factors <file>")
-    else:
-        factorize_file(sys.argv[1])
+        return
+
+    filename = sys.argv[1]
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                number = int(line.strip())
+                factors = factorize(number)
+                p = factors[0]
+                q = number // p
+                print(f"{number}={p}*{q}")
+    except FileNotFoundError:
+        print(f"File '{filename}' not found.")
+    except ValueError:
+        print("Invalid number in the file.")
+
+if __name__ == "__main__":
+    main()
