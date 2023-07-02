@@ -1,1 +1,1 @@
-RSA Factoring Challenge project
+RSA Factoring Challenge
